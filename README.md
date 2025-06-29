@@ -4,6 +4,8 @@
 
 PHP로 2주 만에 개발했으나, 개발 기간이 시험 기간과 겹쳐 코드 완성도가 개인적으로 많이 아쉬웠습니다. 이후 Spring Framework를 학습한 뒤, 복습을 겸해 Spring Boot로 다시 개발했습니다.
 
+이후 6개월간의 실무 경험을 바탕으로 프로젝트의 기능과 구조를 개선한 버전을 다시 Spring Boot로 구현했습니다.
+https://github.com/dlwlsdn9633/management.system
 
 ## 2. 설계
 ![hpmsERD](https://github.com/coldsteelpope/hpms/assets/128117575/a44ff3cc-0a52-4d50-a9d7-3f812caeb6e0)
