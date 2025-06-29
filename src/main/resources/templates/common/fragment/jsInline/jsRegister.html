@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<script th:inline="javascript" th:fragment="jsRegister">
+    const depTypeElement = document.getElementById("depType");
+    const depTypeInputsElement = document.getElementById("depTypeInputs");
+    const fieldInputElement = document.getElementById("fieldInput");
+    const majorTypeElement = document.getElementById("majorType");
+    const majorTypeInputsElement = document.getElementById("majorTypeInputs");
+    const detailFieldInput = document.getElementById("detailFieldInput");
+    depTypeElement.addEventListener("click", () => {
+        majorTypeInputsElement.style.display = "none";
+        detailFieldInput.value = "";
+        depTypeInputsElement.style.display = "";
+    });
+    majorTypeElement.addEventListener("click", () => {
+        depTypeInputsElement.style.display = "none";
+        fieldInputElement.value = "";
+        majorTypeInputsElement.style.display = "";
+    });
+</script>
+
+</body>
+</html>

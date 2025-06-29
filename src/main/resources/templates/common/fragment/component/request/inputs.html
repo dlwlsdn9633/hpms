@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<section th:fragment="requestInput">
+    <div class="form-floating">
+        <textarea required name="request" class="form-control" placeholder="영역 세부 설명" id="floatingTextarea" style="height: 150px;"></textarea>
+        <label for="floatingTextarea"><small>영역 세부 설명</small></label>
+    </div>
+</section>
+
+
+<section th:fragment="dateInput">
+    <div class="row">
+        <div class="col">
+            <label for="currentDate"><small>요청 일시</small></label>
+            <input class="form-control" type="date" id="currentDate" name="currentDate"/>
+        </div>
+        <div class="col">
+            <label for="expectedCompleteDate"><small>예정 완료 일시</small></label>
+            <input id="expectedCompleteDate" class="form-control" required type="date" name="expectedCompleteDate" />
+        </div>
+    </div>
+    <script th:inline="javascript">
+        document.getElementById("currentDate").value = new Date().toISOString().substring(0, 10);
+    </script>
+</section>
+
+<section class="mt-5" th:fragment="commentInput">
+    <div>
+        <h4>피드백 작성</h4>
+        <form th:action="@{/api/comment/create/{id}(id=${requests[0].id})}" method="post" enctype="multipart/form-data">
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 150px" name="comment"></textarea>
+                <label for="floatingTextarea2">피드백 작성</label>
+            </div>
+            <div class="row g-2 mt-3">
+                <div class="col-9">
+                    <input class="form-control" type="file" name="commentFiles" />
+                </div>
+                <div class="col-3">
+                    <button class="btn btn-primary w-100">
+                        제출
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+</body>
+</html>

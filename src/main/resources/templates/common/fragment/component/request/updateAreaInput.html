@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<section th:fragment="updateAreaInput">
+    <div class="row">
+        <div class="col">
+            <label><small>영역 선택</small></label>
+            <select name="area" id="areaSelect" class="form-select">
+                <option
+                        th:each="areaName, areaNameStat : ${areaNames}"
+                        th:text="${areaName}"
+                        th:value="${areaNameStat.index + 1}"
+                        th:selected="${areaNameStat.index + 1} == ${requestUpdateGetParam.area}"
+                ></option>
+            </select>
+        </div>
+
+        <div class="col">
+            <label><small>세부 영역 선택</small></label>
+            <select name="detailArea" id="detailOneSelect" th:style="${requestUpdateGetParam.area} == 1 ? '' : 'display:none;'" class="form-select">
+                <option
+                        th:each="detailOneSelectName : ${detailOneSelectNames}"
+                        th:text="${detailOneSelectName}"
+                        th:selected="${requestUpdateGetParam.detailArea} == ${detailOneSelectName}"
+                ></option>
+            </select>
+
+            <select name="detailArea" id="detailTwoSelect" th:style="${requestUpdateGetParam.area} == 2 ? '' : 'display:none;'" class="form-select">
+                <option
+                        th:each="detailTwoSelectName : ${detailTwoSelectNames}"
+                        th:text="${detailTwoSelectName}"
+                        th:selected="${requestUpdateGetParam.detailArea} == ${detailTwoSelectName}"
+                ></option>
+            </select>
+
+            <select name="detailArea" id="detailThreeSelect" th:style="${requestUpdateGetParam.area} == 3 ? '' : 'display:none;'" class="form-select">
+                <option
+                        th:each="detailThreeSelectName : ${detailThreeSelectNames}"
+                        th:text="${detailThreeSelectName}"
+                        th:selected="${requestUpdateGetParam.detailArea} == ${detailThreeSelectName}"
+                ></option>
+            </select>
+
+            <select name="detailArea" id="detailFourSelect" th:style="${requestUpdateGetParam.area} == 4 ? '' : 'display:none;'" class="form-select">
+                <option
+                        th:each="detailFourSelectName : ${detailFourSelectNames}"
+                        th:text="${detailFourSelectName}"
+                        th:selected="${requestUpdateGetParam.detailArea} == ${detailFourSelectName}"
+                ></option>
+            </select>
+
+            <select name="detailArea" id="detailFiveSelect" th:style="${requestUpdateGetParam.area} == 5 ? '' : 'display:none;'" class="form-select">
+                <option
+                        th:each="detailFiveSelectName : ${detailFiveSelectNames}"
+                        th:text="${detailFiveSelectName}"
+                        th:selected="${requestUpdateGetParam.detailArea} == ${detailFiveSelectName}"
+                ></option>
+            </select>
+        </div>
+    </div>
+</section>
+</body>
+</html>

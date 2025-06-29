@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="status">
+    <th:block th:if="${request.status} == 'ready'">
+        <span class="btn btn-secondary rounded-pill w-100">준비중</span>
+    </th:block>
+    <th:block th:if="${request.status} == 'processing'">
+        <span class="btn btn-primary rounded-pill w-100">진행중</span>
+    </th:block>
+    <th:block th:if="${request.status} == 'done'">
+        <span class="btn btn-success rounded-pill w-100">완료</span>
+    </th:block>
+</div>
+</body>
+</html>

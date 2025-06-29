@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <section th:fragment="fieldInput">
+        <div>
+            <div class="mb-3 row">
+                <div class="col">
+                    <label class="form-label"><small>부서 및 학과 선택</small></label>
+                    <select th:replace="~{common/fragment/component/request/selects ::departmentTypeSelect}"></select>
+                </div>
+
+                <div id="depTypeSelect" class="col">
+                    <label class="form-label"><small>부서 선택</small></label>
+                    <select th:replace="~{common/fragment/component/request/selects :: dep}"></select>
+                </div>
+
+                <div id="majorTypeSelect" style="display:none;" class="col row">
+                    <div class="col">
+                        <label class="form-label"><small>대학 선택</small></label>
+                        <select th:replace="~{common/fragment/component/request/selects :: fieldType}"></select>
+                    </div>
+
+                    <div class="col">
+                        <label class="form-label"><small>학과 선택</small></label>
+                        <!-- 신학 대학 -->
+                        <select id="theologicalCollege" class="form-select">
+                            <option th:each="theologicalCollegeSelectElement : ${theologicalCollegeSelect}" th:text="${theologicalCollegeSelectElement.detailField}" th:value="${theologicalCollegeSelectElement.id}">부서명</option>
+                        </select>
+                        <!-- 인문 사회 과학 대학 -->
+                        <select id="humanitiesAndSocialSciencesCollege" style="display: none;" class="form-select">
+                            <option
+                                    th:each="humanitiesAndSocialSciencesCollegeElement : ${humanitiesAndSocialSciencesCollege}"
+                                    th:text="${humanitiesAndSocialSciencesCollegeElement.detailField}"
+                                    th:value="${humanitiesAndSocialSciencesCollegeElement.id}"
+                            >부서명</option>
+                        </select>
+                        <!-- 경영 대학 -->
+                        <select id="businessManagementCollege" style="display: none;" class="form-select">
+                            <option
+                                    th:each="businessManagementCollegeElement : ${businessManagementCollege}"
+                                    th:text="${businessManagementCollegeElement.detailField}"
+                                    th:value="${businessManagementCollegeElement.id}"
+                            ></option>
+                        </select>
+                        <!-- 이공 대학 -->
+                        <select id="techCollege" style="display: none;" class="form-select">
+                            <option
+                                    th:each="techCollegeElement : ${techCollege}"
+                                    th:text="${techCollegeElement.detailField}"
+                                    th:value="${techCollegeElement.id}"
+                            ></option>
+                        </select>
+                        <!-- 예술 대학 -->
+                        <select id="artCollege" style="display: none;" class="form-select">
+                            <option
+                                    th:each="artCollegeElement : ${artCollege}"
+                                    th:text="${artCollegeElement.detailField}"
+                                    th:value="${artCollegeElement.id}"
+                            ></option>
+                        </select>
+                        <!-- 웨슬리 창의 융합 대학 -->
+                        <select id="wesleyCollege" style="display: none;" class="form-select">
+                            <option
+                                    th:each="wesleyCollegeElement : ${wesleyCollege}"
+                                    th:text="${wesleyCollegeElement.detailField}"
+                                    th:value="${wesleyCollegeElement.id}"
+
+                            ></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-primary w-100" type="button" id="addDepartmentBtn">부서 및 학과 추가 하기</button>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<table class="table" th:fragment="requestDepartments">
+    <thead class="table-secondary">
+        <tr>
+            <th scope="col">부서명</th>
+            <th scope="col">학과명</th>
+            <th scope="col">삭제 버튼</th>
+        </tr>
+    </thead>
+    <tbody id="departmentTable">
+
+    </tbody>
+</table>
+
+<table class="table" th:fragment="requestSummaryTable">
+    <thead>
+    <tr class="table-secondary">
+        <th scope="col">부서명</th>
+        <th scope="col">학과명</th>
+        <th scope="col">영역</th>
+        <th scope="col">세부 영역</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="department : ${departments}">
+        <th:block th:if="${department.detailField == null}">
+            <td th:text="${department.field}">부서명</td>
+            <td>-</td>
+        </th:block>
+        <th:block th:if="${department.detailField != null}">
+            <td th:text="${department.field}">학교명</td>
+            <td th:text="${department.detailField}">학과명</td>
+        </th:block>
+        <td><span th:text="${requests[0].area}">N</span> 영역</td>
+        <td th:text="${requests[0].detailArea}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<table class="table" th:fragment="requestDetailDescriptionTable">
+    <tr class="table-secondary">
+        <th>요청 세부 사항</th>
+    </tr>
+    <tr>
+        <td>[[${requests[0].request}]]</td>
+    </tr>
+</table>
+
+<table class="table" th:fragment="requestDatesTable">
+    <thead>
+    <tr class="table-primary">
+        <th>요청 일자</th>
+        <th>예상 완료 일자</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th th:text="${{requests[0].requestDate}}"></th>
+        <th th:text="${{requests[0].expectedCompleteDate}}"></th>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>

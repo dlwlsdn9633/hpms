@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<script th:inline="javascript" th:fragment="jsComment">
+    let bOpenReply[[${commentStat.index}]] = false;
+    const replyInputContainer[[${commentStat.index}]]Element = document.getElementById("replyInputContainer[[${commentStat.index}]]");
+    const replyBtn[[${commentStat.index}]]Element = document.getElementById("replyBtn[[${commentStat.index}]]");
+
+    replyBtn[[${commentStat.index}]]Element.addEventListener("click", () => {
+      if (bOpenReply[[${commentStat.index}]])
+      {
+        replyInputContainer[[${commentStat.index}]]Element.style.display = "none";
+        bOpenReply[[${commentStat.index}]] = false;
+      }
+      else
+      {
+        replyInputContainer[[${commentStat.index}]]Element.style.display = "";
+        bOpenReply[[${commentStat.index}]] = true;
+      }
+    });
+</script>
+</body>
+</html>

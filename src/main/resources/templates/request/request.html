@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/fragment/commonHead :: commonHead(~{::title})">
+    <meta charset="UTF-8">
+    <title>Request Page</title>
+</head>
+<body>
+<nav th:replace="~{common/fragment/navbar :: navbar}"></nav>
+    <main class="container mt-3">
+
+        <div th:replace="~{common/fragment/component/request/status :: status}"></div>
+
+        <div class="mt-2"></div>
+        <table th:replace="~{common/fragment/component/request/tables :: requestSummaryTable}"></table>
+        <table th:replace="~{common/fragment/component/request/tables :: requestDetailDescriptionTable}"></table>
+        <table th:replace="~{common/fragment/component/request/tables :: requestDatesTable}"></table>
+
+        <section th:replace="~{common/fragment/component/request/inputs :: commentInput}"></section>
+
+        <section th:replace="~{common/fragment/component/comment/comments :: comments}"></section>
+
+        <th:block th:if="${departmentSession.admin} == true">
+            <section th:replace="~{common/fragment/component/request/requestBtns :: requestBtns}"></section>
+        </th:block>
+    </main>
+</body>
+</html>

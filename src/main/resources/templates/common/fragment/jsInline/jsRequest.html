@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+
+<script th:inline="javascript" th:fragment="jsInitUpdateDepartments">
+    const exDepartments = [[${requestUpdateGetParam.departments}]];
+    addedDepartmentIds = [[${requestUpdateGetParam.departmentIds}]]
+    for (index = 0; index < exDepartments.length; ++index)
+    {
+        const exPart = document.createElement("tr");
+        const exPartField = document.createElement("th");
+        exPartField.setAttribute("scope", "col");
+        exPartField.innerHTML = exDepartments[index].field;
+        exPart.appendChild(exPartField);
+
+        let exPartDetailField = document.createElement("th");
+        if(exDepartments[index].detailField != null)
+        {
+            exPartDetailField.innerHTML = exDepartments[index].detailField;
+        }
+        else
+        {
+            exPartDetailField.innerHTML = '-';
+        }
+        exPart.appendChild(exPartDetailField);
+
+        const exPartDeletBtnContainer = document.createElement("th");
+
+        const exPartDeleteBtn = document.createElement("button");
+        exPartDeleteBtn.setAttribute("value", exDepartments[index].id);
+        exPartDeleteBtn.setAttribute("class", "btn btn-sm btn-danger w-100")
+        exPartDeleteBtn.textContent = "삭제 하기";
+
+        exPartDeleteBtn.addEventListener("click", (event) => {
+            const currentDepId = parseInt(event.target.value);
+            let deleteIdx = 0;
+            for (index = 0; index < addedDepartmentIds.length; ++index)
+            {
+                if (addedDepartmentIds[index] == currentDepId)
+                {
+                    deleteIdx = index;
+                    break;
+                }
+            }
+            addedDepartmentIds.splice(deleteIdx, 1);
+            departmentTableElement.children[deleteIdx].remove();
+        });
+
+        exPartDeletBtnContainer.appendChild(exPartDeleteBtn)
+        exPart.appendChild(exPartDeletBtnContainer);
+        departmentTableElement.appendChild(exPart);
+    }
+</script>
+
+<script th:inline="javascript" th:fragment="jsFieldInput">
+    const departmentTypeSelectElement = document.getElementById("departmentTypeSelect");
+    const fieldTypeElement = document.getElementById("fieldType");
+    const depElement = document.getElementById("dep");
+    const departmentTableElement = document.getElementById("departmentTable");
+
+    let addedDepartmentIds = []
+
+    const addDepartmentBtnElement = document.getElementById("addDepartmentBtn");
+
+    const typeElements = [
+        document.getElementById("depTypeSelect"),
+        document.getElementById("majorTypeSelect")
+    ];
+
+    const collegeElements = [
+        document.getElementById("theologicalCollege"),
+        document.getElementById("humanitiesAndSocialSciencesCollege"),
+        document.getElementById("businessManagementCollege"),
+        document.getElementById("techCollege"),
+        document.getElementById("artCollege"),
+        document.getElementById("wesleyCollege"),
+    ]
+
+    const collegeNames = [
+        "신학 대학",
+        "인문 사회 과학 대학",
+        "경영 대학",
+        "이공 대학",
+        "예술 대학",
+        "웨슬리 창의 융합 대학"
+    ];
+
+    departmentTypeSelectElement.addEventListener("change", (event) => {
+        const typeIdx = parseInt(event.target.value);
+        for (index = 0; index < typeElements.length; ++index)
+        {
+            typeElements[index].style.display = "none";
+        }
+        typeElements[typeIdx].style.display = "";
+    });
+
+    fieldTypeElement.addEventListener("change", (event) => {
+        const collegeIdx = parseInt(event.target.value);
+        for (index = 0; index < collegeElements.length; ++index)
+        {
+            collegeElements[index].style.display = "none";
+        }
+        collegeElements[collegeIdx].style.display = "";
+    });
+
+    addDepartmentBtnElement.addEventListener("click", () => {
+        const currentDepartmentTypeValue = parseInt(departmentTypeSelectElement.value);
+
+        switch(currentDepartmentTypeValue)
+        {
+            case 0:
+                const currentDepId = parseInt(depElement.value);
+
+                let isExisted = false;
+                for (index = 0; index < addedDepartmentIds.length; ++index)
+                {
+                    if(addedDepartmentIds[index] == currentDepId)
+                    {
+                        isExisted = true;
+                    }
+                }
+
+                if(isExisted)
+                {
+                    alert("이미 추가된 부서 입니다.");
+                }
+                else
+                {
+                    if(isNaN(currentDepId))
+                    {
+                        alert("존재하지 않는 부서 입니다.");
+                    }
+                    else
+                    {
+                        addedDepartmentIds.push(currentDepId);
+
+                        const addedDepPart = document.createElement("tr");
+
+                        const addedDepPartField = document.createElement("th");
+                        addedDepPartField.setAttribute("scope", "col");
+                        addedDepPartField.innerHTML = `${depElement[depElement.selectedIndex].text}`;
+
+                        const addedTempPartField = document.createElement("th");
+                        addedTempPartField.setAttribute("scope", "col");
+                        addedTempPartField.innerHTML = "-";
+
+                        const addedDepPartDeleteBtnContainer = document.createElement("th");
+                        addedDepPartDeleteBtnContainer.setAttribute("scope", "col");
+
+                        const addedDepPartDeleteBtn = document.createElement("button");
+                        addedDepPartDeleteBtn.setAttribute("value", currentDepId);
+                        addedDepPartDeleteBtn.setAttribute("class", "btn btn-sm btn-danger w-100");
+                        addedDepPartDeleteBtn.textContent = "삭제 하기";
+                        addedDepPartDeleteBtn.addEventListener("click", (event) => {
+                            const currentDepId = parseInt(event.target.value);
+                            let deleteIdx = 0;
+                            for (index = 0; index < addedDepartmentIds.length; ++index)
+                            {
+                                if (addedDepartmentIds[index] == currentDepId)
+                                {
+                                    deleteIdx = index;
+                                    break;
+                                }
+                            }
+                            addedDepartmentIds.splice(deleteIdx, 1);
+                            departmentTableElement.children[deleteIdx].remove();
+                        });
+                        addedDepPartDeleteBtnContainer.appendChild(addedDepPartDeleteBtn);
+
+                        addedDepPart.appendChild(addedDepPartField);
+                        addedDepPart.appendChild(addedTempPartField);
+                        addedDepPart.appendChild(addedDepPartDeleteBtnContainer);
+
+                        departmentTableElement.appendChild(addedDepPart);
+                    }
+                }
+
+                break;
+            case 1:
+                const currentCollegeIdx = parseInt(fieldTypeElement.value);
+                let majorId = collegeElements[currentCollegeIdx].value;
+
+                if (majorId == '')
+                {
+                    alert("존재 하지 않는 학과 입니다.");
+                }
+                else
+                {
+                    majorId = parseInt(majorId);
+                    let isExisted = false;
+                    for (index = 0; index < addedDepartmentIds.length; ++index)
+                    {
+                        if(addedDepartmentIds[index] == majorId)
+                        {
+                            isExisted = true;
+                        }
+                    }
+
+                    if(isExisted)
+                    {
+                        alert("이미 추가된 학과 입니다.");
+                    }
+                    else
+                    {
+                        addedDepartmentIds.push(majorId);
+
+                        const addedMajorPart = document.createElement("tr");
+
+                        const addedMajorPartField = document.createElement("th");
+                        addedMajorPartField.setAttribute("scope", "col");
+                        addedMajorPartField.innerHTML = `${collegeNames[currentCollegeIdx]}`;
+
+                        const addedMajorPartDetailField = document.createElement("th");
+                        addedMajorPartDetailField.setAttribute("scope", "col");
+                        const selectedIdx = collegeElements[currentCollegeIdx].selectedIndex;
+                        addedMajorPartDetailField.innerHTML = `${collegeElements[currentCollegeIdx][selectedIdx].text}`;
+
+                        const addedMajorPartDeleteBtnContainer = document.createElement("th");
+                        addedMajorPartDeleteBtnContainer.setAttribute("scope", "col");
+
+                        const addedMajorPartDeleteBtn = document.createElement("button");
+                        addedMajorPartDeleteBtn.setAttribute("class", "btn btn-sm btn-danger w-100");
+                        addedMajorPartDeleteBtn.setAttribute("value", majorId);
+                        addedMajorPartDeleteBtn.textContent = "삭제 하기";
+                        addedMajorPartDeleteBtn.addEventListener("click", (event) => {
+                            const currentDepId = parseInt(event.target.value);
+                            let deleteIdx = 0;
+                            for (index = 0; index < addedDepartmentIds.length; ++index)
+                            {
+                                if (addedDepartmentIds[index] == currentDepId)
+                                {
+                                    deleteIdx = index;
+                                    break;
+                                }
+                            }
+                            addedDepartmentIds.splice(deleteIdx, 1);
+                            departmentTableElement.children[deleteIdx].remove();
+                        });
+
+                        addedMajorPartDeleteBtnContainer.appendChild(addedMajorPartDeleteBtn);
+                        addedMajorPart.appendChild(addedMajorPartField);
+                        addedMajorPart.appendChild(addedMajorPartDetailField);
+                        addedMajorPart.appendChild(addedMajorPartDeleteBtnContainer);
+                        departmentTableElement.appendChild(addedMajorPart);
+                    }
+                }
+                break;
+        }
+    });
+</script>
+
+
+<script th:inline="javascript" th:fragment="jsAreaInput">
+    const areaSelectElement = document.getElementById("areaSelect");
+    const detailSelectElements = [
+        null,
+        document.getElementById("detailOneSelect"),
+        document.getElementById("detailTwoSelect"),
+        document.getElementById("detailThreeSelect"),
+        document.getElementById("detailFourSelect"),
+        document.getElementById("detailFiveSelect")
+    ];
+
+    areaSelectElement.addEventListener("change", (event) => {
+        const selectNum = parseInt(event.target.value);
+
+        for (i = 1; i <= detailSelectElements.length - 1; ++i)
+        {
+            detailSelectElements[i].style.display = "none";
+        }
+        detailSelectElements[selectNum].style.display = "";
+    })
+</script>
+
+</body>
+</html>

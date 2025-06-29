@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/fragment/commonHead :: commonHead(~{::title})">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="~{common/fragment/navbar :: navbar}"></nav>
+
+<main class="container mt-3">
+    <section>
+        <table class="table">
+            <thead>
+                <tr class="table-secondary">
+                    <th scope="col">부서 및 학과</th>
+                    <th scope="col">부서 및 학과명</th>
+                    <th scope="col">마스터 여부</th>
+                    <th scope="col">어드민 여부</th>
+                    <th scope="col">로그인 확인 여부</th>
+                    <th scope="col">수정 버튼</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="department, departmentStat : ${departments}">
+                    <th th:text="(${department.detailField} == null) ? '부서' : '학과' + '(' + ${department.detailField} + ')'"></th>
+                    <th th:text="(${department.detailField} == null) ? ${department.field} : ${department.detailField}"></th>
+                    <th>
+                        <th:block th:replace="~{common/fragment/component/master/status :: masterStatus}"></th:block>
+                    </th>
+                    <th>
+                        <th:block th:replace="~{common/fragment/component/master/status :: adminStatus}"></th:block>
+                    </th>
+                    <th>
+                        <th:block th:if="${department.commit} == true">
+                            <button class="btn btn-success w-100" disabled>
+                                확인 완료
+                            </button>
+                        </th:block>
+                        <th:block th:if="${department.commit} == false">
+                            <form th:action="@{/api/department/update/status/{id}(id=${department.id})}" method="post">
+                                <button type="submit" class="btn btn-danger w-100">
+                                    로그인 수락
+                                </button>
+                            </form>
+                        </th:block>
+                    </th>
+                    <th>
+                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" th:data-bs-target="'#staticBackdrop' + ${departmentStat.index}">
+                            수정 하기
+                        </button>
+                    </th>
+                    <!-- Modal Start -->
+                    <div th:fragment="'departmentModal' + ${departmentStat.index}" class="modal fade" th:id="staticBackdrop + ${departmentStat.index}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">수정 탭</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form th:action="@{/api/department/update/{id}(id=${department.id})}" method="post">
+                                    <div class="modal-body">
+                                        <div>
+                                            <select class="form-select" name="fieldType" th:id="'fieldSelect' + ${department.id}">
+                                                <option value="0" th:selected="${department.detailField} == null">부서</option>
+                                                <option value="1" th:selected="${department.detailField} != null">학과</option>
+                                            </select>
+                                        </div>
+                                        <div th:replace="~{common/fragment/component/master/inputs :: fieldInput}"></div>
+                                        <div th:replace="~{common/fragment/component/master/inputs :: masterInput}"></div>
+                                        <div th:replace="~{common/fragment/component/master/inputs :: adminInput}"></div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                                        <button type="submit" class="btn btn-primary">수정</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal End -->
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+
+</main>
+</body>
+</html>

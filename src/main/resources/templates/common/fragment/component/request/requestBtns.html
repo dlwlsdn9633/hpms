@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section th:fragment="requestBtns">
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-secondary w-100" th:href="@{/request/update/{id}(id=${requests[0].id})}">
+                요청 사항 수정
+            </a>
+        </div>
+        <div class="col">
+            <div th:if="${requests[0].status == 'ready'}">
+                <form th:action="@{/api/request/status/update/{id}/0(id=${requests[0].id})}" method="POST">
+                    <button class="btn btn-primary w-100">진행 중으로 변경</button>
+                </form>
+            </div>
+            <div th:if="${requests[0].status == 'processing'}">
+                <form th:action="@{/api/request/status/update/{id}/1(id=${requests[0].id})}" method="POST">
+                    <button class="btn btn-primary w-100">요청 사항 완료</button>
+                </form>
+            </div>
+            <div th:if="${requests[0].status == 'done'}">
+                <form th:action="@{/api/request/status/update/{id}/2(id=${requests[0].id})}" method="POST">
+                    <button class="btn btn-primary w-100">진행 중으로 변경</button>
+                </form>
+            </div>
+        </div>
+        <div class="col">
+            <form th:action="@{/api/request/delete/{id}(id=${requests[0].id})}" method="post">
+                <button class="btn btn-danger w-100">요청 사항 삭제</button>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>

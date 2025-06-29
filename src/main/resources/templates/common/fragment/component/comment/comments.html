@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<section th:fragment="comments" class="mt-5">
+  <div th:each="comment, commentStat : ${comments}">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="d-flex flex-start">
+          <img class="rounded-circle shadow-1-strong me-3"
+               src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(20).webp" alt="avatar" width="40"
+               height="40" />
+          <div class="w-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h6 class="text-primary fw-bold mb-0">
+                [[${comment.department.field}]]
+                <span class="text-dark ms-2">[[${comment.comment}]]</span>
+              </h6>
+              <div class="mb-0">
+
+              </div>
+              <p class="mb-0">
+                날짜
+              </p>
+            </div>
+            <div th:replace="~{common/fragment/component/comment/optionBtns :: optionBtns}"></div>
+
+            <!-- Modal -->
+            <div th:replace="~{common/fragment/component/comment/modals :: updateModal}"></div>
+            <div th:replace="~{common/fragment/component/comment/modals :: filesModal}"></div>
+
+            <section th:replace="~{common/fragment/component/reply/inputs :: replyInput}"></section>
+            <script th:replace="~{common/fragment/jsInline/jsComment :: jsComment}"></script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

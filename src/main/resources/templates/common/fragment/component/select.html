@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="orderSelect">
+    <select class="form-select" id="orderSelect">
+        <option value="default" selected>순서 선택하기</option>
+        <option value="asc">성취도 오름차순</option>
+        <option value="desc">성취도 내림차순</option>
+    </select>
+    <script>
+        const orderSelectElement = document.getElementById("orderSelect");
+        orderSelectElement.addEventListener("change", (event) => {
+            if (event.target.value != "default")
+            {
+                const currentURL = window.location.href.split("?")[0];
+                window.location.href = currentURL + "?order=" + event.target.value;
+            }
+        });
+    </script>
+</th:block>
+</body>
+</html>

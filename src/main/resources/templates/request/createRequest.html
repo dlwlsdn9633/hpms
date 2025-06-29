@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/fragment/commonHead :: commonHead(~{::title})">
+    <meta charset="UTF-8">
+    <title>REQUEST 생성</title>
+</head>
+<body>
+<nav th:replace="~{common/fragment/navbar :: navbar}"></nav>
+<main class="container mt-3">
+    <form id="createForm">
+        <section>
+            <table th:replace="~{common/fragment/component/request/tables :: requestDepartments}"></table>
+        </section>
+
+        <section th:replace="~{common/fragment/component/request/fieldInput :: fieldInput}"></section>
+        <script th:replace="~{common/fragment/jsInline/jsRequest :: jsFieldInput}"></script>
+
+        <div class="mt-3">
+            <section th:replace="~{common/fragment/component/request/createAreaInput :: createAreaInput}"></section>
+            <script th:replace="~{common/fragment/jsInline/jsRequest :: jsAreaInput}"></script>
+        </div>
+        <div class="mt-3">
+            <div>
+                <section th:replace="~{common/fragment/component/request/inputs :: requestInput}"></section>
+            </div>
+            <div class="mt-3">
+                <section th:replace="~{common/fragment/component/request/inputs :: dateInput}"></section>
+            </div>
+        </div>
+        <div class="mt-3">
+            <button class="btn btn-primary btn-lg w-100" type="button" id="submitBtn">등록 하기</button>
+        </div>
+    </form>
+</main>
+<script th:replace="~{common/fragment/jsInline/jsForm :: jsCreateRequestForm}"></script>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<section th:fragment="dateInput">
+    <div class="row">
+        <div class="col">
+            <label for="currentDate"><small>요청 일시</small></label>
+            <input class="form-control" type="date" id="currentDate" name="currentDate" th:value="${requestUpdateGetParam.requestDate}"/>
+        </div>
+        <div class="col">
+            <label for="expectedCompleteDate"><small>예정 완료 일시</small></label>
+            <input id="expectedCompleteDate" class="form-control" required type="date" name="expectedCompleteDate" th:value="${requestUpdateGetParam.expectedCompleteDate}" />
+        </div>
+    </div>
+    <script th:inline="javascript">
+        document.getElementById("currentDate").value = new Date().toISOString().substring(0, 10);
+    </script>
+</section>
+
+</body>
+</html>

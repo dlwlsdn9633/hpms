@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<select id="departmentTypeSelect" th:fragment="departmentTypeSelect" class="form-select">
+    <option value="0" selected>부서</option>
+    <option value="1">학과</option>
+</select>
+
+<select id="dep" class="form-select w-100" th:fragment="dep">
+    <option th:each="depTypeElement : ${depTypeElements}" th:text="${depTypeElement.field}" th:value="${depTypeElement.id}">부서명</option>
+</select>
+
+<select id="fieldType" name="fieldType" class="form-select w-100" th:fragment="fieldType">
+    <option
+        th:each="collegeName, collegeNameStat : ${collegeNames}"
+        th:text="${collegeName}"
+        th:value="${collegeNameStat.index}"
+    ></option>
+</select>
+
+
+
+</body>
+</html>

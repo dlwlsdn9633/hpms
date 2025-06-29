@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<section th:fragment="createAreaInput">
+    <div class="row">
+        <div class="col">
+            <label><small>영역 선택</small></label>
+            <select name="area" id="areaSelect" class="form-select">
+                <option
+                        th:each="areaName, areaStat : ${areaNames}"
+                        th:value="${areaStat.index + 1}"
+                        th:text="${areaName}"
+                ></option>
+            </select>
+        </div>
+        <div class="col">
+            <label><small>세부 영역 선택</small></label>
+            <select name="detailArea" id="detailOneSelect" class="form-select">
+                <option
+                        th:each="detailOneSelectName, detailOneSelectNameStat : ${detailOneSelectNames}"
+                        th:value="${detailOneSelectName}"
+                        th:text="${detailOneSelectName}"
+                ></option>
+            </select>
+            <select name="detailArea" id="detailTwoSelect" style="display: none;" class="form-select">
+                <option
+                        th:each="detailTwoSelectName, detailTwoSelectNameStat : ${detailTwoSelectNames}"
+                        th:value="${detailTwoSelectName}"
+                        th:text="${detailTwoSelectName}"
+                ></option>
+            </select>
+            <select name="detailArea" id="detailThreeSelect" style="display: none;" class="form-select">
+                <option
+                        th:each="detailThreeSelectName, detailThreeSelectNameStat : ${detailThreeSelectNames}"
+                        th:value="${detailThreeSelectName}"
+                        th:text="${detailThreeSelectName}"
+                ></option>
+            </select>
+            <select name="detailArea" id="detailFourSelect" style="display: none;" class="form-select">
+                <option
+                        th:each="detailFourSelectName, detailFourSelectNameStat : ${detailFourSelectNames}"
+                        th:value="${detailFourSelectName}"
+                        th:text="${detailFourSelectName}"
+                ></option>
+            </select>
+            <select name="detailArea" id="detailFiveSelect" style="display: none;" class="form-select">
+                <option
+                        th:each="detailFiveSelectName, detailFiveSelectNameStat : ${detailFiveSelectNames}"
+                        th:value="${detailFiveSelectName}"
+                        th:text="${detailFiveSelectName}"
+                ></option>
+            </select>
+        </div>
+    </div>
+</section>
+</body>
+</html>

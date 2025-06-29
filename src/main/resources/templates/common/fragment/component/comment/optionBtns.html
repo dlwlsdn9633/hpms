@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="d-flex small mb-0" style="color: #aaa" th:fragment="optionBtns">
+    <button
+            th:id="'replyBtn' + ${commentStat.index}"
+            style="background: none; border: none;"
+            class="text-primary">답글
+    </button>
+    <th:block th:if="${departmentSession.id} == ${comment.department.id}">•
+    <button
+            type="button"
+            class="text-primary"
+            style="background: none; border: none;"
+            data-bs-toggle="modal"
+            th:data-bs-target="'#staticBackdrop' + ${comment.id}"
+    >
+        업데이트
+    </button> •
+    <form th:action="@{/api/comment/delete/{id}/{requestId}(id=${comment.id}, requestId=${requests[0].id})}" method="post">
+        <button type="submit" class="small text-primary" style="background: none; border: none;">삭제</button>
+    </form>
+    </th:block>
+    <th:block th:if="${#lists.isEmpty(comment.commentFiles)} == false">
+        <button type="button" class="text-primary" style="background: none; border: none;" data-bs-toggle="modal" th:data-bs-target="'#staticBackdropFiles' + ${comment.id}">
+            • 파일 [[${#lists.size(comment.commentFiles)}]]개
+        </button>
+    </th:block>
+</div>
+</body>
+</html>

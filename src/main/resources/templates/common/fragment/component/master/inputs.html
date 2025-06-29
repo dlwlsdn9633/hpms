@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="adminInput" class="mt-3">
+    <label>어드민 권한 부여</label>
+    <div class="row mt-1">
+        <div class="col">
+            <input class="form-check-input" th:id="'adminOptionTrue' + ${department.id}" type="radio" name="adminOption" th:checked="${department.admin eq true}" value="1" />
+            <label class="form-check-label" th:for="'adminOptionTrue' + ${department.id}">예</label>
+        </div>
+        <div class="col">
+            <input class="form-check-input" th:id="'adminOptionFalse' + ${department.id}" type="radio" name="adminOption" th:checked="${department.admin eq false}" value="0" />
+            <label class="form-check-label" th:for="'adminOptionFalse' + ${department.id}">아니요</label>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="masterInput" class="mt-3">
+    <label>마스터 권한 부여</label>
+    <div class="row mt-1">
+        <div class="col">
+            <input class="form-check-input" th:id="'masterOptionTrue' + ${department.id}" type="radio" name="masterOption" th:checked="${department.master eq true}" value="1" />
+            <label class="form-check-label" th:for="'masterOptionTrue' + ${department.id}">예</label>
+        </div>
+        <div class="col">
+            <input class="form-check-input" th:id="'masterOptionFalse' + ${department.id}" type="radio" name="masterOption" th:checked="${department.master eq false}" value="0" />
+            <label class="form-check-label" th:for="'masterOptionFalse' + ${department.id}">아니오</label>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="fieldInput">
+    <div>
+        <div th:id="'depFieldInputContainer' + ${department.id}" th:style="${department.detailField} == null ? '' : 'display: none;'" class="mt-1">
+            부서 명
+            <input class="form-control" type="text" name="depField" th:value="${department.field}" />
+        </div>
+        <div th:id="'majorFieldInputContainer' + ${department.id}" th:style="${department.detailField} != null ? '' : 'display: none;'" class="mt-1">
+            <div>
+                <label>학교 명</label>
+                <select class="form-select" name="majorField">
+                    <option th:each="collegeName : ${collegeNames}" th:selected="${collegeName} == ${department.field}" th:text="${collegeName}" th:value="${collegeName}"></option>
+                </select>
+            </div>
+            <div class="mt-1">
+                <label>학과 명</label>
+                <input type="text" class="form-control" name="majorDetailField" th:value="${department.detailField}" />
+            </div>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        const fieldSelect[[${department.id}]]Element = document.getElementById("fieldSelect[[${department.id}]]");
+        const containers[[${department.id}]]Elements = [
+            document.getElementById("depFieldInputContainer[[${department.id}]]"),
+            document.getElementById("majorFieldInputContainer[[${department.id}]]")
+        ];
+
+        fieldSelect[[${department.id}]]Element.addEventListener("change", (event) => {
+            for (index = 0; index < containers[[${department.id}]]Elements.length; ++index)
+            {
+                const currentEle = containers[[${department.id}]]Elements[index];
+                currentEle.style.display = "none";
+            }
+            containers[[${department.id}]]Elements[parseInt(event.target.value)].style.display = "";
+        });
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+
+
+<script th:inline="javascript" th:fragment="jsUpdateRequestForm">
+    const updateForm = document.getElementById("updateForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const floatingTextareaElement = document.getElementById("floatingTextarea");
+
+    submitBtn.addEventListener("click", (event) => {
+        if (confirm("정말로 이대로 수정하시겠습니까?"))
+        {
+            if (addedDepartmentIds.length != 0)
+            {
+                if (floatingTextareaElement.value == '')
+                {
+                    alert("영역 세부 설명을 입력해 주세요");
+                }
+                else
+                {
+                    const departmentIdsInput = document.createElement("input");
+
+                    departmentIdsInput.setAttribute("type", "hidden");
+                    departmentIdsInput.setAttribute("name", "departmentIds");
+                    departmentIdsInput.setAttribute("value", addedDepartmentIds);
+                    updateForm.appendChild(departmentIdsInput);
+
+                    updateForm.action="/api/request/update/" + [[${requests[0].id}]];
+                    updateForm.method="POST";
+                    updateForm.submit();
+                }
+            }
+        }
+    });
+</script>
+
+<script th:inline="javascript" th:fragment="jsCreateRequestForm">
+    const createForm = document.getElementById("createForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const expectedCompleteDateElement = document.getElementById("expectedCompleteDate");
+    const floatingTextareaElement = document.getElementById("floatingTextarea");
+
+    submitBtn.addEventListener("click", (event) => {
+        if (confirm("정말로 추가하시겠습니까?"))
+        {
+            if (addedDepartmentIds.length != 0)
+            {
+                if(floatingTextareaElement.value == '')
+                {
+                    alert("영역 세부 설명을 입력해 주세요");
+                }
+                else if (expectedCompleteDateElement.value == '')
+                {
+                    alert("예정 일자을 입력해 주세요");
+                }
+                else
+                {
+                    const departmentIdsInput = document.createElement("input");
+
+                    departmentIdsInput.setAttribute("type", "hidden");
+                    departmentIdsInput.setAttribute("name", "departmentIds");
+                    departmentIdsInput.setAttribute("value", addedDepartmentIds);
+                    createForm.appendChild(departmentIdsInput);
+
+                    createForm.action="/api/request/create";
+                    createForm.method="POST";
+                    createForm.submit();
+                }
+            }
+            else
+            {
+                alert("부서 및 학과를 추가해 주세요!");
+            }
+        }
+    });
+</script>
+</body>
+</html>

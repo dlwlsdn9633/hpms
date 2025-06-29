@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/fragment/commonHead :: commonHead(~{::title})">
+    <meta charset="UTF-8">
+    <title>RANK</title>
+</head>
+<body>
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">H-PMS</a>
+    </div>
+</nav>
+<main class="container">
+    <div th:each="department : ${departments}">
+        <div class="card mt-3 animate__animated animate__flipInX">
+            <div class="list-group list-group-flush">
+                <div class="list-group-item d-flex py-3 align-items-center">
+                    <div class="flex-fill ps-4 overflow-hidden">
+                        <th:block th:if="${department.detailField != null}">
+                            <div class="fw-bold mb-0 text-truncate">[[${department.detailField}]]</div>
+                        </th:block>
+                        <th:block th:if="${department.detailField == null}">
+                            <div class="fw-bold mb-0 text-truncate">[[${department.field}]]</div>
+                        </th:block>
+                        <div class="small text-muted mb-1">진행률 <span th:text="${#numbers.formatInteger(department.doneRatio, 1)}"></span>%</div>
+                        <div class="progress">
+                            <div th:style="'width: ' + ${department.doneRatio} + '%'" class="progress-bar bg-konkon"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    function redirectPage()
+    {
+        const currentType = window.location.search.split("=")[1];
+        const currentURL = window.location.href.split("?")[0];
+        if (currentType == "department" || currentType == "major")
+        {
+            const nextType = (currentType == "department") ? "major" : "department";
+            window.location.href = currentURL + "?type=" + nextType;
+        }
+        else
+        {
+            window.location.href = currentURL + "?type=department";
+        }
+    }
+    setInterval(redirectPage, 7000);
+</script>
+</body>
+</html>
